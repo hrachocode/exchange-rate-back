@@ -27,14 +27,13 @@ export class AppService {
           amount: amount,
         };
       }
-      clearTimeout(timeout(from_currency_code));
-      timeout(from_currency_code);
       if (currencies[from_currency_code] === null) {
         const currentData = await axios.get(
           `https://freecurrencyapi.net/api/v2/latest?apikey=${process.env.API_KEY}&base_currency=${from_currency_code}`,
-        );
-        currencies[from_currency_code] = currentData;
-      }
+          );
+          currencies[from_currency_code] = currentData;
+          timeout(from_currency_code);
+        }
       const exchange_rate =
         currencies[from_currency_code].data.data[to_currency_code];
       return {
